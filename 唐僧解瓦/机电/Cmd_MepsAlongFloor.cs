@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Linq;
 using 唐僧解瓦.BinLibrary.Extensions;
- using Microsoft.VisualBasic;
-using FaceArray = Autodesk.Revit.DB.FaceArray;
 
 namespace 唐僧解瓦.机电
 {
@@ -43,7 +37,12 @@ namespace 唐僧解瓦.机电
 
             var planeNorm = planarFace.FaceNormal;
             var planeOrigin = planarFace.Origin;
+#if Revit2016
+            var plane =new Plane(planeNorm, planeOrigin);
+#endif
+#if Revit2019
             var plane = Plane.CreateByNormalAndOrigin(planeNorm, planeOrigin);
+#endif
 
             Transform trs = Transform.Identity;
             trs.Origin = planeOrigin;

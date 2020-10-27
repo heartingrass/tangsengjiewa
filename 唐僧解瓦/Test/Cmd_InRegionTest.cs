@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using 唐僧解瓦.BinLibrary.Extensions;
-using 唐僧解瓦.BinLibrary.Helpers;
 namespace 唐僧解瓦.Test
 {
     [Transaction(TransactionMode.Manual)]
@@ -52,7 +49,7 @@ namespace 唐僧解瓦.Test
             var temline = Line.CreateBound(point, point + XYZ.BasisZ * 10);
             doc.NewLine(temline);
             var result = IsPointInRegion(point, points,XYZ.BasisZ);
-            //MessageBox.Show(result.ToString());
+            MessageBox.Show(result.ToString());
             return Result.Succeeded;
         }
         public bool IsPointInRegion(XYZ po, List<XYZ> points)

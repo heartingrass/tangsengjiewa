@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using 唐僧解瓦.BinLibrary.Extensions;
 
 namespace 唐僧解瓦.建筑
 {
+
+    /// <summary>
+    /// 梁随板 未完成
+    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Journaling(JournalingMode.UsingCommandData)]
     [Regeneration(RegenerationOption.Manual)]
@@ -135,7 +136,14 @@ namespace 唐僧解瓦.建筑
         public Plane ConstructPlane(XYZ origin, XYZ vector1, XYZ vector2)
         {
             var result = default(Plane);
-            result = Plane.CreateByNormalAndOrigin(vector1.CrossProduct(vector2).Normalize(), origin);
+
+#if Revit2019
+              result = Plane.CreateByNormalAndOrigin(vector1.CrossProduct(vector2).Normalize(), origin);
+#endif
+#if Revit2016
+            result = new Plane(vector1.CrossProduct(vector2).Normalize(), origin);
+#endif
+             
             return result;
         }
         /// <summary>
@@ -147,7 +155,16 @@ namespace 唐僧解瓦.建筑
         /// <returns></returns>
         public Plane ConstructPlane(Line line, XYZ vector)
         {
-            var result = Plane.CreateByNormalAndOrigin(line.Direction.CrossProduct(vector).Normalize(), line.Origin);
+
+            var result = default(Plane);
+
+#if Revit2019
+              result = Plane.CreateByNormalAndOrigin(line.Direction.CrossProduct(vector).Normalize(), line.Origin);
+#endif
+#if Revit2016
+            result = new Plane(line.Direction.CrossProduct(vector).Normalize(), line.Origin);
+#endif
+            //var result = Plane.CreateByNormalAndOrigin(line.Direction.CrossProduct(vector).Normalize(), line.Origin);
             return result;
         }
 

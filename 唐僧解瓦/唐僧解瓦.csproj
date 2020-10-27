@@ -19,9 +19,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Revit2019</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,16 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdWindows">
+    <Reference Include="AdWindows, Version=6.3.0.21, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RevitAPI">
+    <Reference Include="RevitAPI, Version=16.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPIUI">
+    <Reference Include="RevitAPIUI, Version=16.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -56,26 +60,31 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIFrameworkServices, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="UIFrameworkServices, Version=16.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\UIFrameworkServices.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinLibrary\Extensions\BitmapExtension.cs" />
     <Compile Include="BinLibrary\Extensions\ColorExtension.cs" />
     <Compile Include="BinLibrary\Extensions\ConnectorExtension.cs" />
     <Compile Include="BinLibrary\Extensions\CreationExtension.cs" />
+    <Compile Include="BinLibrary\Extensions\DocumentExtension.cs" />
     <Compile Include="BinLibrary\Extensions\DoubleExtension.cs" />
     <Compile Include="BinLibrary\Extensions\ElementIdExtension.cs" />
     <Compile Include="BinLibrary\Extensions\GeometryElementExtension.cs" />
     <Compile Include="BinLibrary\Extensions\GeometryObjectExtension.cs" />
     <Compile Include="BinLibrary\Extensions\LineExtension.cs" />
     <Compile Include="BinLibrary\Extensions\MepcurveExtension.cs" />
+    <Compile Include="BinLibrary\Extensions\PipeExtension.cs" />
     <Compile Include="BinLibrary\Extensions\PointExtension.cs" />
     <Compile Include="BinLibrary\Extensions\ReferenceExtension.cs" />
     <Compile Include="BinLibrary\Extensions\SelectionFilter.cs" />
     <Compile Include="BinLibrary\Extensions\TransactionExtension.cs" />
+    <Compile Include="BinLibrary\Extensions\UIDocumentExtension.cs" />
     <Compile Include="BinLibrary\Extensions\VectorExtension.cs" />
     <Compile Include="BinLibrary\Extensions\WindwoExtension.cs" />
     <Compile Include="BinLibrary\Extensions\XYZExtension.cs" />
@@ -90,12 +99,17 @@
     <Compile Include="Class1.cs" />
     <Compile Include="HWCracApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resource1.Designer.cs" />
     <Compile Include="Test\Cmd_DimLine.cs" />
     <Compile Include="Test\Cmd_DimPipe.cs" />
     <Compile Include="Test\Cmd_ExternalStorageDataTest.cs" />
     <Compile Include="Test\Cmd_ExternalStorageTest.cs" />
+    <Compile Include="Test\Cmd_FlipTee.cs" />
     <Compile Include="Test\Cmd_GetCuttedFace.cs" />
     <Compile Include="Test\Cmd_InRegionTest.cs" />
+    <Compile Include="Test\Cmd_MepcurveDirTest.cs" />
+    <Compile Include="Test\Cmd_RotateTest.cs" />
+    <Compile Include="Test\Cmd_SurfaceTest.cs" />
     <Compile Include="Test\TestCmd_AdaptiveTest.cs" />
     <Compile Include="Test\UIs\AboutForm.cs">
       <SubType>Form</SubType>
@@ -119,7 +133,14 @@
     <Compile Include="Test\TestCmd_FIlterRoom.cs" />
     <Compile Include="建筑\Cmd_BeamAlignToRoofAndFloor.cs" />
     <Compile Include="建筑\Cmd_CreateFloorQukly.cs" />
+    <Compile Include="建筑\Cmd_CutFloorWithLine.cs" />
+    <Compile Include="建筑\Cmd_SetDefaultWallType.cs" />
     <Compile Include="建筑\Utils.cs" />
+    <Compile Include="机电\About\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="机电\About\AboutCommand.cs" />
+    <Compile Include="机电\Cmd_BreakWire.cs" />
     <Compile Include="机电\Cmd_ChamferPipes.cs" />
     <Compile Include="机电\Cmd_changeSystem.cs" />
     <Compile Include="机电\Cmd_ConnectEquipMent.cs" />
@@ -129,11 +150,46 @@
     <Compile Include="机电\Cmd_MepCurveBreak.cs" />
     <Compile Include="机电\Cmd_MepCurveRank.cs" />
     <Compile Include="机电\Cmd_MepsAlongFloor.cs" />
+    <Compile Include="机电\Cmd_RaiseTeeBranch.cs" />
+    <Compile Include="机电\Cmd_Recursion.cs" />
+    <Compile Include="机电\Cmd_ElementFilterTest.cs" />
+    <Compile Include="机电\Cmd_SelectLinkedPipes.cs" />
     <Compile Include="机电\Cmd_VerticalPipeConvert.cs" />
+    <Compile Include="机电\ToolUIs\FilterWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="机电\ToolUIs\FilterWindow.Designer.cs">
+      <DependentUpon>FilterWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="机电\ToolUIs\MepcurveRank.xaml.cs">
       <DependentUpon>MepcurveRank.xaml</DependentUpon>
     </Compile>
+    <Compile Include="机电\ToolUIs\ValueSettingUI.xaml.cs">
+      <DependentUpon>ValueSettingUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="样板\Cmd_CopyViewCropRegion.cs" />
+    <Compile Include="样板\Cmd_CreateNewCableTrayType.cs" />
+    <Compile Include="注释\Cmd_DimAllDuctsAndNearestGrid.cs" />
+    <Compile Include="样板\Cmd_HideMepCenter.cs" />
+    <Compile Include="样板\Cmd_HideRevitInstance.cs" />
+    <Compile Include="样板\UIs\TypeSelector.xaml.cs">
+      <DependentUpon>TypeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="样板\UIs\ViewSelector.xaml.cs">
+      <DependentUpon>ViewSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="注释\Cmd_DimAllPipesAndNearestGrid.cs" />
+    <Compile Include="注释\Cmd_DimPipeAndGrid.cs" />
+    <Compile Include="注释\Cmd_FlipDimension.cs" />
+    <Compile Include="注释\Cmd_LengthAccumulate.cs" />
+    <Compile Include="注释\Cmd_SectionGap.cs" />
+    <Compile Include="注释\UIs\ResultShow.xaml.cs">
+      <DependentUpon>ResultShow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="通用\Cmd_3DregionView.cs" />
+    <Compile Include="通用\Cmd_CategoryFilter.cs" />
+    <Compile Include="通用\Cmd_ChangeType.cs" />
+    <Compile Include="通用\Cmd_ElementTest.cs" />
     <Compile Include="通用\Cmd_ReverseBackGroundColor.cs" />
     <Compile Include="通用\Cmd_ChangeBackGroundColor.cs" />
     <Compile Include="通用\Cmd_Floor3D.cs" />
@@ -154,11 +210,38 @@
       <DependentUpon>ViewSemutaneousSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="高级\Cmd_CallSystemCmd.cs" />
+    <Compile Include="高级\Cmd_DragTest.cs" />
+    <Compile Include="高级\UIs\DragForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="高级\UIs\DragForm.Designer.cs">
+      <DependentUpon>DragForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="机电\About\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="机电\ToolUIs\MepcurveRank.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="机电\ToolUIs\ValueSettingUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="样板\UIs\TypeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="样板\UIs\ViewSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="注释\UIs\ResultShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="通用\UIs\FloorSelector.xaml">
       <SubType>Designer</SubType>
@@ -177,12 +260,26 @@
     <Folder Include="结构\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource1.resx" />
     <EmbeddedResource Include="Test\UIs\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test\UIs\ColumnTypesForm.resx">
       <DependentUpon>ColumnTypesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="机电\ToolUIs\FilterWindow.resx">
+      <DependentUpon>FilterWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="高级\UIs\DragForm.resx">
+      <DependentUpon>DragForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\hideshow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="工具\AssemblyTools1.1 无日期限制版.zip" />
+    <None Include="样例项目\楼板测试.rvt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

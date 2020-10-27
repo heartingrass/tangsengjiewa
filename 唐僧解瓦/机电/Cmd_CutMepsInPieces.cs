@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Autodesk.Revit.DB.Electrical;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using 唐僧解瓦.BinLibrary.Extensions;
 
 namespace 唐僧解瓦.机电
@@ -157,6 +155,13 @@ namespace 唐僧解瓦.机电
                               point.DistanceTo(end) > 1d.MetricToFeet();
             if (!executeflag) throw new Exception("点不在线上");
             var doc = mep.Document;
+
+#if Revit2016
+            return null;
+#endif
+#if Revit2019
+            
+
             ElementId result = null;
             if (mep is Duct)
             {
@@ -179,6 +184,7 @@ namespace 唐僧解瓦.机电
                 result = newcabletray.Id;
             }
             return result.GetElement(doc) as MEPCurve;
+#endif
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace 唐僧解瓦.BinLibrary.Helpers
 {
@@ -21,9 +17,9 @@ namespace 唐僧解瓦.BinLibrary.Helpers
             }
         }
 
-        public static void LogWrite(string msg, string path)
+        public static void LogWrite(string msg, string path,bool append= false)
         {
-            StreamWriter sw = new StreamWriter(path);
+            StreamWriter sw = new StreamWriter(path, append);
             sw.WriteLine(msg);
             sw.Close();
         }

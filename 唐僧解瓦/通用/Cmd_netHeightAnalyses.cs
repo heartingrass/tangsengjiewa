@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using 唐僧解瓦.BinLibrary.Extensions;
 using 唐僧解瓦.BinLibrary.Helpers;
 
@@ -99,20 +97,24 @@ namespace 唐僧解瓦.通用
                 //geometrys.Add(geometry);
                 var geometrys1 = new List<GeometryObject>() { geometry };
 
+#if Revit2019
                 doc.Invoke(m =>
                 {
                     var directShape = DirectShape.CreateElement(doc, new ElementId(BuiltInCategory.OST_GenericModel));
                     directShape.AppendShape(geometrys1);
                 }, "创建内建模型");
+#endif
+
+
 
             }
-            
+
             //SpatialElementGeometryCalculator spatialGeometryCal = new SpatialElementGeometryCalculator(doc);
             //foreach (Room room in rooms)
             //{
             //    var roomGeo = spatialGeometryCal.CalculateSpatialElementGeometry(room);
             //}
-            
+
             return Result.Succeeded;
         }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using 唐僧解瓦.BinLibrary.Helpers;
 
 namespace 唐僧解瓦.BinLibrary.Extensions
@@ -18,8 +12,14 @@ namespace 唐僧解瓦.BinLibrary.Extensions
             var norm = default(XYZ);
 
             norm = dir.getRandomNorm();
+            var plan = default(Plane);//.CreateByNormalAndOrigin(norm, origin);
+#if Revit2019
+              plan = Plane.CreateByNormalAndOrigin(norm, origin);
+#endif
+#if Revit2016
+            plan =new Plane (norm, origin);
+#endif
 
-            var plan = Plane.CreateByNormalAndOrigin(norm, origin);
             var sketchplane = SketchPlane.Create(doc, plan);
             doc.Create.NewModelCurve(line, sketchplane);
         }
@@ -55,7 +55,16 @@ namespace 唐僧解瓦.BinLibrary.Extensions
 
             #endregion
 
-            var plan = Plane.CreateByNormalAndOrigin(norm, origin);
+            var plan = default(Plane); // Plane.CreateByNormalAndOrigin(norm, origin);
+
+#if Revit2016
+            plan = new Plane(norm, origin);
+#endif
+#if Revit2019
+            plan = Plane.CreateByNormalAndOrigin(norm, origin);
+#endif
+
+
             doc.Invoke(m =>
             {
                 var sketchplane = SketchPlane.Create(doc, plan);
